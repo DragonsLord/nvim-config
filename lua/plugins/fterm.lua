@@ -1,3 +1,4 @@
+-- [NOTE] Already have a terminal avialable with <C-/>
 return {
   "numToStr/FTerm.nvim",
   keys = {
