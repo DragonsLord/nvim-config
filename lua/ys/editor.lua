@@ -15,8 +15,12 @@ vim.opt.smartindent = true
 -- regex search highlighting
 vim.opt.incsearch = true
 
--- scroll earlier 
+-- scroll earlier
 vim.opt.scrolloff = 8
 
 vim.opt.swapfile = false
 vim.opt.backup = false
+
+if vim.loop.os_uname().sysname == "Windows_NT" then
+  vim.fn.setenv("SHELL", "powershell")
+end
