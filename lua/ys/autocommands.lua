@@ -20,3 +20,11 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 		vim.highlight.on_yank()
 	end,
 })
+
+-- F# file types support
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+	pattern = { "*.fs", "*.fsi", "*.fsx" },
+	callback = function()
+		vim.opt.filetype = "fsharp"
+	end,
+})
