@@ -1,6 +1,20 @@
+local get_format_callback = function(bufnr)
+	local client = vim.lsp.get_clients({ name = "roslyn" })[1]
+	if not client then
+		return nil
+	end
+
+	-- detaching current buffer during formatting because
+	-- roslyn LS might fail dur to line count changes or smth like that
+	vim.lsp.buf_detach_client(bufnr, client.id)
+
+	return function()
+		vim.lsp.buf_attach_client(bufnr, client.id)
+	end
+end
+
 return {
 	"stevearc/conform.nvim",
-	-- optional = true,
 	event = { "BufWritePre" },
 	cmd = { "ConformInfo" },
 	keys = {
@@ -8,7 +22,7 @@ return {
 			-- Customize or remove this keymap to your liking
 			"<leader>cf",
 			function()
-				require("conform").format({ async = true })
+				require("conform").format({ async = true }, get_format_callback(vim.api.nvim_get_current_buf()))
 			end,
 			mode = { "n", "v" },
 			desc = "[C]ode [F]ormat",
@@ -19,19 +33,21 @@ return {
 		-- Define your formatters
 		formatters_by_ft = {
 			lua = { "stylua" },
-			cs = { "csharpier" },
+			cs = { "csharpier", lsp_format = "first" },
 		},
 		-- Set default options
 		default_format_opts = {
 			lsp_format = "fallback",
 		},
 		-- Set up format-on-save
-		format_on_save = { timeout_ms = 500 },
+		format_on_save = function(bufnr)
+			return { timeout_ms = 1000 }, get_format_callback(bufnr)
+		end,
 		-- Customize formatters
 		formatters = {
 			csharpier = {
 				command = "dotnet-csharpier",
-				args = { "--write-stdout" },
+				args = { "--skip-write" },
 			},
 		},
 	},
