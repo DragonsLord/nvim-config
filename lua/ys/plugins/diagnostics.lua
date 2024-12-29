@@ -39,7 +39,7 @@ return {
 	},
 	{
 		"folke/todo-comments.nvim",
-		cmd = { "TodoTrouble", "TodoTelescope" },
+		lazy = false,
 		dependencies = { "nvim-lua/plenary.nvim" },
 		opts = {},
 		keys = {
