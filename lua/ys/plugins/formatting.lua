@@ -34,6 +34,10 @@ return {
 		formatters_by_ft = {
 			lua = { "stylua" },
 			cs = { "csharpier", lsp_format = "first" },
+			md = { "prettier" },
+			json = { "prettier" },
+			jsonc = { "prettier" },
+			yaml = { "prettier" },
 		},
 		-- Set default options
 		default_format_opts = {

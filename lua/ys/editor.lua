@@ -21,6 +21,8 @@ vim.opt.scrolloff = 8
 vim.opt.swapfile = false
 vim.opt.backup = false
 
+vim.opt.termguicolors = true
+
 if vim.loop.os_uname().sysname == "Windows_NT" then
-  vim.fn.setenv("SHELL", "powershell")
+	vim.fn.setenv("SHELL", "powershell")
 end
